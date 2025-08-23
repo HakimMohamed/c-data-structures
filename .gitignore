@@ -1,0 +1,27 @@
+# Visual Studio local cache
+.vs/
+
+# VS Code project settings (optional)
+.vscode/
+
+# Build outputs
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# C/C++ intermediates
+ipch/
+*.pch
+*.pdb
+*.obj
+*.idb
+*.ilk
