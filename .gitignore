@@ -25,3 +25,4 @@ ipch/
 *.obj
 *.idb
 *.ilk
+*.exe

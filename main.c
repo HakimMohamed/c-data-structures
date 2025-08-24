@@ -18,7 +18,7 @@ int peek(struct Stack* s);
 int main() {
 	struct Stack s;
 
-	init_stack(&s);
+    init_stack(&s);
 
 	for (int i = 0; i < MAX; i++) {
 		push(&s, i);
@@ -55,7 +55,7 @@ void init_stack(struct Stack* s) {
 int pop(struct Stack* s) {
 	if (s->length <= 0) {
 		printf("Stack underflow\n");
-		return;
+		return -1;
 	}
 
 	s->length--;
