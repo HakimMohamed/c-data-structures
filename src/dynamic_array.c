@@ -71,3 +71,32 @@ void freeArray(DynamicArray *arr) {
     arr->length = 0;
     arr->capacity = 0;
 }
+
+int getIndex (DynamicArray *arr, int target){
+    // binary search
+    int l = 0;
+    int r = arr->length - 1;
+
+    while(l <= r) {
+        int midPoint = l + ((r - l) / 2);
+
+        if(arr->data[midPoint] > target) {
+            r = midPoint - 1;
+        }else if(arr->data[midPoint] < target){
+            l = midPoint + 1;
+        }else{
+            return midPoint;
+        }
+    }
+
+    return -1;    
+}
+
+int findIndex(DynamicArray *arr, int target) {
+    for (int i = 0; i < arr->length; i++) {
+        if (arr->data[i] == target) {
+            return i; // return first match
+        }
+    }
+    return -1;
+}
