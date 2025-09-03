@@ -6,12 +6,12 @@ typedef struct {
     int capacity; 
 } DynamicArray;
 
-void initArray(DynamicArray *arr, int capacity);
-void resizeArray(DynamicArray *arr);
+void init_array(DynamicArray *arr, int capacity);
+void resize_array(DynamicArray *arr);
 void push(DynamicArray *arr, int value);
 void pop(DynamicArray *arr);
 int get(DynamicArray *arr, int index);
 void set(DynamicArray *arr, int index, int value);
-void freeArray(DynamicArray *arr);
-int findIndex(DynamicArray *arr, int target); // works on unsorted arrays
-int getIndex(DynamicArray *arr, int target);  // binary search, requires sorted array
+void free_array(DynamicArray *arr);
+int find_index(DynamicArray *arr, int target); // works on unsorted arrays
+int get_index(DynamicArray *arr, int target);  // binary search, requires sorted array

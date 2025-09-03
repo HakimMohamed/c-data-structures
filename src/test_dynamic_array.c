@@ -3,119 +3,138 @@
 #include <assert.h>
 #include "dynamic_array.h"
 
-// Helper: compare for qsort (for binary search tests)
-static int int_cmp(const void *a, const void *b) {
-    int ia = *(const int*)a;
-    int ib = *(const int*)b;
-    return (ia > ib) - (ia < ib);
-}
-
-void test_dynamic_array() {
+void test_init_and_free() {
     DynamicArray arr;
-
-    // --- init ---
-    initArray(&arr, 2);
+    init_array(&arr, 2);
     assert(arr.length == 0);
     assert(arr.capacity == 2);
-    freeArray(&arr);
+    free_array(&arr);
+}
 
-    // --- push & resize ---
-    initArray(&arr, 2);
+void test_push_and_resize() {
+    DynamicArray arr;
+    init_array(&arr, 2);
+    
     push(&arr, 10);
     push(&arr, 20);
-    push(&arr, 30); // should resize
+    push(&arr, 30); // Should trigger a resize
+    
     assert(arr.length == 3);
-    assert(arr.capacity >= 3);
+    assert(arr.capacity == 4);
     assert(get(&arr, 0) == 10);
     assert(get(&arr, 1) == 20);
     assert(get(&arr, 2) == 30);
-    freeArray(&arr);
+    
+    free_array(&arr);
+}
 
-    // --- set & get ---
-    initArray(&arr, 2);
+void test_set_and_get() {
+    DynamicArray arr;
+    init_array(&arr, 2);
+
     push(&arr, 1);
     push(&arr, 2);
     set(&arr, 1, 99);
+
     assert(get(&arr, 0) == 1);
     assert(get(&arr, 1) == 99);
-    freeArray(&arr);
 
-    // --- pop (normal + empty) ---
-    initArray(&arr, 3);
+    free_array(&arr);
+}
+
+void test_pop() {
+    DynamicArray arr;
+    init_array(&arr, 3);
+
     push(&arr, 5);
     push(&arr, 6);
     push(&arr, 7);
+    
     pop(&arr);
     assert(arr.length == 2);
     assert(get(&arr, 0) == 5);
     assert(get(&arr, 1) == 6);
-    pop(&arr);
-    pop(&arr);
-    assert(arr.length == 0);
-    pop(&arr); // extra pop, should not crash
-    assert(arr.length == 0);
-    freeArray(&arr);
 
-    // --- findIndex (unsorted) ---
-    initArray(&arr, 5);
+    pop(&arr);
+    pop(&arr);
+    assert(arr.length == 0);
+    
+    pop(&arr);
+    assert(arr.length == 0);
+
+    free_array(&arr);
+}
+
+void test_find_index() {
+    DynamicArray arr;
+    init_array(&arr, 5);
+
     push(&arr, 42);
     push(&arr, 7);
     push(&arr, 99);
     push(&arr, 15);
-    assert(findIndex(&arr, 42) == 0);
-    assert(findIndex(&arr, 7)  == 1);
-    assert(findIndex(&arr, 99) == 2);
-    assert(findIndex(&arr, 15) == 3);
-    assert(findIndex(&arr, 100) == -1); // not found
-    freeArray(&arr);
+    
+    assert(find_index(&arr, 42) == 0);
+    assert(find_index(&arr, 7) == 1);
+    assert(find_index(&arr, 99) == 2);
+    assert(find_index(&arr, 15) == 3);
+    assert(find_index(&arr, 100) == -1); // Not found
 
-    // --- getIndex (sorted, unique elements) ---
-    initArray(&arr, 5);
-    push(&arr, 35);
+    free_array(&arr);
+}
+
+void test_get_index_sorted() {
+    DynamicArray arr;
+    init_array(&arr, 5);
+
+    push(&arr, 5);
     push(&arr, 15);
     push(&arr, 25);
-    push(&arr, 5);
-    qsort(arr.data, arr.length, sizeof(int), int_cmp); // sort: [5,15,25,35]
-    assert(getIndex(&arr, 5) == 0);
-    assert(getIndex(&arr, 15) == 1);
-    assert(getIndex(&arr, 25) == 2);
-    assert(getIndex(&arr, 35) == 3);
-    assert(getIndex(&arr, 100) == -1); // not found
-    assert(getIndex(&arr, 0)   == -1); // below minimum
-    freeArray(&arr);
+    push(&arr, 35);
+    
+    assert(get_index(&arr, 5) == 0);
+    assert(get_index(&arr, 15) == 1);
+    assert(get_index(&arr, 25) == 2);
+    assert(get_index(&arr, 35) == 3);
+    assert(get_index(&arr, 100) == -1); // Not found
+    assert(get_index(&arr, 0) == -1); // Below minimum
 
-    // --- getIndex (duplicates) ---
-    initArray(&arr, 6);
+    free_array(&arr);
+}
+
+void test_get_index_duplicates() {
+    DynamicArray arr;
+    init_array(&arr, 6);
+
     push(&arr, 2);
     push(&arr, 2);
     push(&arr, 2);
     push(&arr, 3);
     push(&arr, 3);
     push(&arr, 4);
-    // Already sorted
-    int idx2 = getIndex(&arr, 2);
-    assert(idx2 >= 0 && arr.data[idx2] == 2);
-    int idx3 = getIndex(&arr, 3);
-    assert(idx3 >= 0 && arr.data[idx3] == 3);
-    int idx4 = getIndex(&arr, 4);
-    assert(idx4 >= 0 && arr.data[idx4] == 4);
-    assert(getIndex(&arr, 5) == -1);
-    freeArray(&arr);
 
-    // --- findIndex vs getIndex consistency ---
-    initArray(&arr, 5);
-    push(&arr, 10);
-    push(&arr, 20);
-    push(&arr, 30);
-    push(&arr, 40);
-    // findIndex works directly
-    assert(findIndex(&arr, 20) == 1);
+    int idx2 = find_index(&arr, 2);
+    assert(get_index(&arr, 2) == idx2);
+    
+    int idx3 = find_index(&arr, 3);
+    assert(get_index(&arr, 3) == idx3);
 
-    // binary search
-    assert(getIndex(&arr, 20) == 1);
+    int idx4 = find_index(&arr, 4);
+    assert(get_index(&arr, 4) == idx4);
+    
+    assert(get_index(&arr, 5) == -1);
 
-    // --- Free array ---
-    freeArray(&arr);
+    free_array(&arr);
+}
 
-    printf("All DynamicArray tests passed!\n\n");
+void test_dynamic_array() {
+    test_init_and_free();
+    test_push_and_resize();
+    test_set_and_get();
+    test_pop();
+    test_find_index();
+    test_get_index_sorted();
+    test_get_index_duplicates();
+    
+    printf("All DynamicArray tests passed!\n");
 }

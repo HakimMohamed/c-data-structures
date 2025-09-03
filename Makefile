@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+CFLAGS = -Wall -g -Wextra -std=c11 -Iinclude
 TARGET = main.exe
 
 # All source files (but NOT main.c)

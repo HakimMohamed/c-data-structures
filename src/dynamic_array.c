@@ -15,7 +15,7 @@
  * So it can be treated both as a general-purpose array and as a stack.
 */
 
-void initArray(DynamicArray *arr, int capacity) {
+void init_array(DynamicArray *arr, int capacity) {
     arr->data = (int*)malloc(sizeof(int) * capacity);
     if (!arr->data) {
         fprintf(stderr, "Memory allocation failed!\n");
@@ -25,7 +25,7 @@ void initArray(DynamicArray *arr, int capacity) {
     arr->capacity = capacity;
 }
 
-void resizeArray(DynamicArray *arr) {
+void resize_array(DynamicArray *arr) {
     arr->capacity *= 2;
     arr->data = (int*)realloc(arr->data, sizeof(int) * arr->capacity);
     if (!arr->data) {
@@ -36,14 +36,13 @@ void resizeArray(DynamicArray *arr) {
 
 void push(DynamicArray *arr, int value) {
     if (arr->length >= arr->capacity) {
-        resizeArray(arr);
+        resize_array(arr);
     }
     arr->data[arr->length++] = value;
 }
 
 void pop(DynamicArray *arr) {
     if (arr->length == 0) {
-        printf("Array is empty!\n");
         return;
     }
     arr->length--; // last element ignored
@@ -65,34 +64,33 @@ void set(DynamicArray *arr, int index, int value) {
     arr->data[index] = value;
 }
 
-void freeArray(DynamicArray *arr) {
+void free_array(DynamicArray *arr) {
     free(arr->data);
     arr->data = NULL;
     arr->length = 0;
     arr->capacity = 0;
 }
 
-int getIndex (DynamicArray *arr, int target){
-    // binary search
-    int l = 0;
-    int r = arr->length - 1;
+int get_index(DynamicArray *arr, int value) {
+    int left = 0, right = arr->length - 1;
+    int result = -1;
 
-    while(l <= r) {
-        int midPoint = l + ((r - l) / 2);
-
-        if(arr->data[midPoint] > target) {
-            r = midPoint - 1;
-        }else if(arr->data[midPoint] < target){
-            l = midPoint + 1;
-        }else{
-            return midPoint;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr->data[mid] == value) {
+            result = mid;
+            right = mid - 1;
+        } else if (arr->data[mid] < value) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
         }
     }
-
-    return -1;    
+    return result;
 }
 
-int findIndex(DynamicArray *arr, int target) {
+
+int find_index(DynamicArray *arr, int target) {
     for (int i = 0; i < arr->length; i++) {
         if (arr->data[i] == target) {
             return i; // return first match
