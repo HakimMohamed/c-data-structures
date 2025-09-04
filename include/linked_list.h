@@ -7,7 +7,7 @@ struct node {
 
 typedef struct {
     struct node* head;
-    struct node* tail; 
+    struct node* tail;
 } LinkedList;
 
 struct node* create_node(int val);

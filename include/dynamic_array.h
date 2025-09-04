@@ -2,8 +2,8 @@
 
 typedef struct {
     int *data;
-    int length;    
-    int capacity; 
+    size_t length;    
+    size_t capacity; 
 } DynamicArray;
 
 void init_array(DynamicArray *arr, int capacity);
