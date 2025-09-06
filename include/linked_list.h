@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stddef.h>
 struct SLLNode {
     int value;
     struct SLLNode* next;
@@ -8,6 +8,7 @@ struct SLLNode {
 typedef struct {
     struct SLLNode* head;
     struct SLLNode* tail;
+    size_t length;
 } SLL;
 
 // Functions
@@ -20,8 +21,8 @@ int sll_get(SLL* obj, int index);
 // Mutations
 void sll_add_head(SLL* obj, int val);
 void sll_add_tail(SLL* obj, int val);
-void sll_add_at_index(SLL* obj, int index, int val);
-void sll_delete_at_index(SLL* obj, int index);
+void sll_add_at_index(SLL* obj, size_t index, int val);
+void sll_delete_at_index(SLL* obj, size_t index);
 
 // Clean up
 void sll_free(SLL* obj);

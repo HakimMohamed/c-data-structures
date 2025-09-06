@@ -3,7 +3,7 @@
 #include "dynamic_array.h"
 
 void init_array(DynamicArray *arr, int capacity) {
-    arr->data = (int*)malloc(sizeof(int) * capacity);
+    arr->data = malloc(sizeof(int) * capacity);
     if (!arr->data) {
         fprintf(stderr, "Memory allocation failed!\n");
         exit(1);
@@ -14,7 +14,7 @@ void init_array(DynamicArray *arr, int capacity) {
 
 void resize_array(DynamicArray *arr) {
     arr->capacity *= 2;
-    arr->data = (int*)realloc(arr->data, sizeof(int) * arr->capacity);
+    arr->data = realloc(arr->data, sizeof(int) * arr->capacity);
     if (!arr->data) {
         fprintf(stderr, "Memory reallocation failed!\n");
         exit(1);
@@ -35,16 +35,16 @@ void pop(DynamicArray *arr) {
     arr->length--; // last element ignored
 }
 
-int get(DynamicArray *arr, int index) {
-    if (index < 0 || index >= arr->length) {
+int get(DynamicArray *arr, size_t index) {
+    if (index >= arr->length) {
         fprintf(stderr, "Index out of bounds!\n");
         exit(1);
     }
     return arr->data[index];
 }
 
-void set(DynamicArray *arr, int index, int value) {
-    if (index < 0 || index >= arr->length) {
+void set(DynamicArray *arr, size_t index, int value) {
+    if (index >= arr->length) {
         fprintf(stderr, "Index out of bounds!\n");
         exit(1);
     }
@@ -78,7 +78,7 @@ int get_index(DynamicArray *arr, int value) {
 
 
 int find_index(DynamicArray *arr, int target) {
-    for (int i = 0; i < arr->length; i++) {
+    for (size_t i = 0; i < arr->length; i++) {
         if (arr->data[i] == target) {
             return i; // return first match
         }

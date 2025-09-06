@@ -6,7 +6,7 @@ TARGET = main.exe
 SRCS = $(wildcard src/*.c)
 OBJS = $(patsubst src/%.c, build/%.o, $(SRCS))
 
-all: build/$(TARGET)
+all: clean build/$(TARGET)
 
 # Link everything into final binary
 build/$(TARGET): build/main.o $(OBJS)
