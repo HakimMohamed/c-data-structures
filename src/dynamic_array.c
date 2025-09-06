@@ -2,19 +2,6 @@
 #include <stdlib.h>
 #include "dynamic_array.h"
 
-/*
- * Dynamic Array Implementation
- *
- * This dynamic array provides a resizable array abstraction in C.
- * It automatically grows when needed and allows random access to elements.
- *
- * In this project, the dynamic array is also used like a stack:
- *   - push() adds an element to the end
- *   - pop() removes the last element
- *
- * So it can be treated both as a general-purpose array and as a stack.
-*/
-
 void init_array(DynamicArray *arr, int capacity) {
     arr->data = (int*)malloc(sizeof(int) * capacity);
     if (!arr->data) {

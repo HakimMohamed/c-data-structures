@@ -1,20 +1,27 @@
 #pragma once
 
-struct node {
+struct SLLNode {
     int value;
-    struct node* next;
+    struct SLLNode* next;
 };
 
 typedef struct {
-    struct node* head;
-    struct node* tail;
-} LinkedList;
+    struct SLLNode* head;
+    struct SLLNode* tail;
+} SLL;
 
-struct node* create_node(int val);
-LinkedList* create_list();
-int list_get(LinkedList* obj, int index);
-void list_add_head(LinkedList* obj, int val);
-void list_add_tail(LinkedList* obj, int val);
-void list_add_at_index(LinkedList* obj, int index, int val);
-void list_delete_at_index(LinkedList* obj, int index);
-void list_free(LinkedList* obj);
+// Functions
+struct SLLNode* sll_create_node(int val);
+SLL* sll_create();
+
+// Queries
+int sll_get(SLL* obj, int index);
+
+// Mutations
+void sll_add_head(SLL* obj, int val);
+void sll_add_tail(SLL* obj, int val);
+void sll_add_at_index(SLL* obj, int index, int val);
+void sll_delete_at_index(SLL* obj, int index);
+
+// Clean up
+void sll_free(SLL* obj);
