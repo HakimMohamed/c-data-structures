@@ -3,12 +3,14 @@
 void test_dynamic_array();
 void test_linked_list();
 void test_doubly_linked_list();
+void test_queue();
 int main() {
     printf("=== Data Structures Test Suite ===\n\n");
 
     test_dynamic_array();
     test_linked_list();
     test_doubly_linked_list();
+    test_queue();
     
     // Incoming tests:
     // test_stack();
