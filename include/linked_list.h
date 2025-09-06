@@ -11,7 +11,7 @@ typedef struct {
     size_t length;
 } SLL;
 
-// Functions
+// Constructors
 struct SLLNode* sll_create_node(int val);
 SLL* sll_create();
 

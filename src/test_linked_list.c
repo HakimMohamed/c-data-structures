@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-void test_create_list_and_node() {
+void sll_test_create_list_and_node() {
     SLL* list = sll_create();
     assert(list != NULL);
     assert(list->head == NULL);
@@ -12,7 +12,7 @@ void test_create_list_and_node() {
     sll_free(list);
 }
 
-void test_add_head() {
+void sll_test_add_head() {
     SLL* list = sll_create();
     sll_add_head(list, 10);
     assert(sll_get(list, 0) == 10);
@@ -28,7 +28,7 @@ void test_add_head() {
     sll_free(list);
 }
 
-void test_add_tail() {
+void sll_test_add_tail() {
     SLL* list = sll_create();
     sll_add_tail(list, 10);
     assert(sll_get(list, 0) == 10);
@@ -49,7 +49,7 @@ void test_add_tail() {
     sll_free(list);
 }
 
-void test_add_at_index() {
+void sll_test_add_at_index() {
     SLL* list = sll_create();
     sll_add_tail(list, 10);
     sll_add_tail(list, 20);
@@ -73,7 +73,7 @@ void test_add_at_index() {
     sll_free(list);
 }
 
-void test_delete_at_index() {
+void sll_test_delete_at_index() {
     SLL* list = sll_create();
     sll_add_tail(list, 10);
     sll_add_tail(list, 20);
@@ -99,11 +99,11 @@ void test_delete_at_index() {
 }
 
 void test_linked_list() {
-    test_create_list_and_node();
-    test_add_head();
-    test_add_tail();
-    test_add_at_index();
-    test_delete_at_index();
+    sll_test_create_list_and_node();
+    sll_test_add_head();
+    sll_test_add_tail();
+    sll_test_add_at_index();
+    sll_test_delete_at_index();
 
     printf("All SLL tests passed!\n");
 }
